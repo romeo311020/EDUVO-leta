@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROMEO LIVE TV</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Arial', sans-serif; }
+
+body {
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  background: #000;
+}
+
+/* Canvas الخلفية */
+canvas#bgCanvas {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:-1;
+}
+
+/* Header */
+header {
+  padding: 25px 20px;
+  font-size: 30px;
+  font-weight: bold;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+  text-shadow: 0 0 15px #00aaff, 0 0 30px #0066ff;
+  border-bottom: 2px solid #00aaff;
+}
+
+/* Container */
+.container {
+  width: 95%;
+  max-width: 950px;
+  margin: 40px auto 60px auto;
+}
+
+/* Player */
+.player {
+  background: rgba(0,0,0,0.6);
+  border-radius: 15px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.9);
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+.player iframe {
+  position: absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  border:0;
+  border-radius:12px;
+}
+
+/* Movie Card */
+.movie-card-wrapper {
+  position: relative;
+  width: 320px;
+  margin: 40px auto;
+}
+
+.movie-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  transition: transform 0.3s;
+}
+
+.movie-card img {
+  width: 100%;
+  display: block;
+}
+
+.movie-card:hover {
+  transform: scale(1.03);
+}
+
+.movie-info-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  gap: 12px;
+}
+
+.movie-info-card {
+  background: rgba(0,0,0,0.6);
+  padding: 10px 16px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.movie-info-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00ccff;
+}
+
+/* Title */
+.title {
+  font-size: 24px;
+  margin: 25px 0 15px 0;
+  text-shadow: 0 0 12px #000, 0 0 20px #00ccff;
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+button {
+  background: linear-gradient(135deg, #0066ff, #00ccff);
+  border: none;
+  padding: 14px 28px;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 15px #0077ff, 0 0 30px #00ccff;
+}
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px #00aaff, 0 0 40px #00ccff;
+}
+
+/* Responsive */
+@media (max-width: 600px){
+  header { font-size: 24px; padding: 18px; }
+  .title { font-size: 20px; margin: 18px 0; }
+  button { padding: 12px 22px; font-size: 16px; }
+  .movie-card-wrapper { width: 90%; }
+  .movie-info-text, .movie-info-card { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<header>🌐 ROMEO LIVE TV</header>
+
+<div class="container">
+  <div class="player">
+    <iframe 
+      id="videoPlayer"
+      src="https://www.youtube.com/embed/3R_VpAX5IdU" 
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="title">🎬 مشاهدة الفيديو الآن</div>
+
+  <div class="buttons">
+    <button onclick="fullscreenVideo()">🖥 ملء الشاشة</button>
+    <button onclick="goBack()">⬅ الرجوع للموقع</button>
+  </div>
+</div>
+
+<!-- Movie Card -->
+<div class="movie-card-wrapper">
+  <div class="movie-card">
+    <img src="https://i.postimg.cc/RVSZhhD3/images-(9).jpg" alt="احمد و احمد">
+  </div>
+  <div class="movie-info-wrapper">
+    <div class="movie-info-card">🎬</div>
+    <div class="movie-info-text">𝑹𝑶𝑴𝑹𝑶 𝑳𝑰𝑽𝑬 𝑻𝑽  حصريا فيلم هارلي  علي  </div>
+  </div>
+</div>
+
+<script>
+// وظائف الأزرار
+function fullscreenVideo(){
+  var playerContainer = document.querySelector(".player"); // كبر الحاوية
+  if (playerContainer.requestFullscreen) { playerContainer.requestFullscreen(); }
+  else if (playerContainer.webkitRequestFullscreen) { playerContainer.webkitRequestFullscreen(); }
+  else if (playerContainer.msRequestFullscreen) { playerContainer.msRequestFullscreen(); }
+}
+
+function goBack(){
+  window.location.href="https://romeo311020.github.io/romeo-live-tv-31/";
+}
+
+// خلفية متدرجة مع نقاط متوهجة
+const canvas = document.getElementById("bgCanvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+
+let particles = [];
+let particleCount = 150;
+
+// إنشاء الجزيئات
+for(let i=0;i<particleCount;i++){
+  particles.push({
+    x: Math.random()*canvas.width,
+    y: canvas.height + Math.random()*canvas.height,
+    radius: Math.random()*2 + 1.5,
+    speed: Math.random()*1.5 + 0.5,
+    glow: Math.random()*0.8 + 0.3
+  });
+}
+
+// رسم الخلفية مع التدرج الضوئي
+function drawBackground(){
+  let gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, canvas.height*0.1, canvas.width/2, canvas.height/2, canvas.height);
+  gradient.addColorStop(0,'rgba(0, 100, 255, 0.4)');
+  gradient.addColorStop(0.5,'rgba(0,0,20,0.6)');
+  gradient.addColorStop(1,'rgba(0,0,10,1)');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+}
+
+// رسم الجزيئات
+function drawParticles(){
+  for(let i=0;i<particles.length;i++){
+    let p = particles[i];
+    p.y -= p.speed;
+    if(p.y < -10) p.y = canvas.height + 10;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+    let grad = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.radius*6);
+    grad.addColorStop(0,'rgba(0, 170, 255,'+p.glow+')');
+    grad.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+  }
+}
+
+// أنيميشن
+function animate(){
+  drawBackground();
+  drawParticles();
+  requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener("resize", resizeCanvas);
+</script>
+
+</body>
+</html>
