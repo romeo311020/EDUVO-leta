@@ -1,0 +1,27 @@
+{
+  "name": "EDUVO - منصة التعليم الذكي",
+  "short_name": "EDUVO",
+  "description": "منصة EDUVO التعليمية: مواد دراسية، مدرسون، كتب، كورسات مجانية، ومساعد ذكي لتنظيم مذاكرتك.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#081a3d",
+  "theme_color": "#081a3d",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
